@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Earn Tons - November 2024</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      height: 100vh;
+      margin: 0;
+      color: #333;
+      background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+      overflow: hidden;
+    }
+
+    /* Header and Footer */
+    .header, .footer {
+      text-align: center;
+      padding: 10px;
+      width: 100%;
+      background-color: #004a99;
+      color: white;
+      font-weight: bold;
+    }
+
+    .footer {
+      font-size: 14px;
+    }
+
+    /* Sign-In Page */
+    #signInPage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 50px;
+    }
+
+    #signInButton, #signInPage input {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    #signInButton {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Home and Task Pages */
+    #homePage, #taskPage {
+      display: none;
+      text-align: center;
+      flex-grow: 1;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .header-buttons, .task-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 30px; /* Space between buttons for full height */
+      margin: 20px 0;
+    }
+
+    .header-button, .task-button {
+      background-color: #28a745;
+      color: #fff;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .header-button:hover, .task-button:hover {
+      background-color: #218838;
+      transform: scale(1.05);
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+      background-color: #333;
+      padding: 10px 0;
+    }
+
+    .bottom-button {
+      background-color: #444;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .bottom-button:hover {
+      background-color: #555;
+    }
+
+    /* Congratulations Animation */
+    .congrats-animation {
+      font-size: 24px;
+      color: #ff6347;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header for Each Page -->
+  <div class="header">
+    New November, 2024<br>
+    Hamster Binance X-Empire Airdrops<br>
+    Earn Money Everywhere Now
+  </div>
+
+  <!-- Sign-In Page -->
+  <div id="signInPage">
+    <h1>Welcome to Earn Tons</h1>
+    <input type="email" id="email" placeholder="Enter your email" required>
+    <input type="password" id="password" placeholder="Enter your password" required>
+    <button id="signInButton">Sign In</button>
+  </div>
+
+  <!-- Home Page -->
+  <div id="homePage">
+    <h1>Earn Tons</h1>
+    <div class="header-buttons">
+      <button id="tonsButton" class="header-button">Tons: 0</button>
+      <button id="dollarButton" class="header-button">Dollars: $0</button>
+    </div>
+  </div>
+
+  <!-- Task Page -->
+  <div id="taskPage">
+    <h1>Earn Tons</h1>
+    <div class="task-buttons">
+      <button class="task-button" onclick="completeTask('telegram', 5000, 'https://t.me/GOGSmore')">Join Telegram to earn 5,000 tons</button>
+      <button class="task-button" onclick="completeTask('youtube', 10000, 'https://www.youtube.com/channel/UCLBivSEh30F44ptAAgEVRUA?sub_confirmation=1')">Subscribe YouTube to earn 10,000 tons</button>
+      <button class="task-button" onclick="completeTask('tiktok', 2000, 'https://www.tiktok.com/@assefagashaye')">Follow TikTok to earn 2,000 tons</button>
+      <button class="task-button" onclick="completeTask('facebook', 2000, 'https://www.facebook.com/')">Follow Facebook to earn 2,000 tons</button>
+    </div>
+    <div class="congrats-animation" id="congratsAnimation">🎉 Congratulations! You've earned tons! 🎉</div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <button class="bottom-button" onclick="showPage('home')">Home</button>
+    <button class="bottom-button" onclick="showPage('task')">Task</button>
+    <button class="bottom-button" onclick="navigateTo('https://t.me/play_payouts')">Game</button>
+    <button class="bottom-button" onclick="navigateTo('https://www.youtube.com/channel/UCLBivSEh30F44ptAAgEVRUA?sub_confirmation=1')">Boost</button>
+    <button class="bottom-button" onclick="navigateTo('https://www.binance.com/en/markets/overview')">Withdraw</button>
+  </div>
+
+  <!-- Footer for Each Page -->
+  <div class="footer">
+    © All rights reserved, November 2024
+  </div>
+
+  <script>
+    // Initialize tons and task completion states
+    let totalTons = 0;
+    const tasksCompleted = {
+      telegram: false,
+      youtube: false,
+      tiktok: false,
+      facebook: false
+    };
+
+    // Sign-In Button
+    document.getElementById("signInButton").addEventListener("click", function() {
+      document.getElementById("signInPage").style.display = "none";
+      showPage('home');
+    });
+
+    // Update Tons and Dollars
+    const updateTonsDisplay = () => {
+      document.getElementById("tonsButton").textContent = `Tons: ${totalTons}`;
+      document.getElementById("dollarButton").textContent = `Dollars: $${(totalTons / 1000000).toFixed(2)}`;
+    };
+
+    // Complete Task Function
+    const completeTask = (task, reward, link) => {
+      if (!tasksCompleted[task]) {
+        tasksCompleted[task] = true;
+        totalTons += reward;
+        updateTonsDisplay();
+
+        // Open link in a new tab
+        window.open(link, '_blank');
+        
+        // Update button text to "Done" and disable
+        document.querySelector(`.task-button[onclick*="${task}"]`).textContent = "Done ✔️";
+        document.querySelector(`.task-button[onclick*="${task}"]`).disabled = true;
+        
+        // Check if all tasks are completed
+        checkAllTasksComplete();
+      } else {
+        alert("Task already completed!");
+      }
+    };
+
+    // Check if all tasks are completed and show congratulations
+    const checkAllTasksComplete = () => {
+      if (Object.values(tasksCompleted).every(Boolean)) {
+        const congratsAnimation = document.getElementById("congratsAnimation");
+        congratsAnimation.style.display = "block";
+        setTimeout(() => congratsAnimation.style.display = "none", 3000);
+      }
+    };
+
+    // Show specific page
+    const showPage = (page) => {
+      document.getElementById("homePage").style.display = (page === 'home') ? 'block' : 'none';
+      document.getElementById("taskPage").style.display = (page === 'task') ? 'block' : 'none';
+    };
+
+    // Open external URL
+    const navigateTo = (url) => {
+      window.open(url, '_blank');
+    };
+  </script>
+
+</body>
+</html>
